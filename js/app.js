@@ -25,6 +25,7 @@ function makeField(container, array) {
   }
 }
 function simonEpilogue(container, array, answerArray) {
+  let counter = 0;
   for (let i = 0; i < array.length; i++) {
     const cellNumber = document.createElement("div");
     cellNumber.innerHTML = array[i];
@@ -32,14 +33,16 @@ function simonEpilogue(container, array, answerArray) {
     if (answerArray.includes(array[i])) {
       cellNumber.style.color = `darkgreen`;
       cellNumber.style.borderColor = `darkgreen`;
+      counter++;
     } else {
       cellNumber.style.color = `darkred`;
       cellNumber.style.borderColor = `darkred`;
     }
     container.append(cellNumber);
   }
+  return counter;
 }
-function simonQuestion(container, array, answerArray) {
+function simonQuestion(container, array, answerArray, status) {
   for (let i = 0; i < array.length; i++) {
     let answer = Number(
       prompt(`Inserisci il ${i + 1}° dei ${array.length} numeri`)
@@ -47,7 +50,12 @@ function simonQuestion(container, array, answerArray) {
     answerArray.push(answer);
   }
 
-  simonEpilogue(container, array, answerArray);
+  let correctAnswer = simonEpilogue(container, array, answerArray);
+  if (correctAnswer > (array.length / 5) * 3) {
+    status.innerHTML = `Complimenti, hai risposto correttamente a ${correctAnswer} su ${array.length}!`;
+  } else {
+    status.innerHTML = `Fai pena, hai azzeccato giusto ${correctAnswer} su ${array.length}, riprova`;
+  }
 }
 
 // Form submit -> start
@@ -59,8 +67,8 @@ generator.addEventListener("submit", function (event) {
   // Board
   const board = document.getElementById("board");
   // Game Status
-  const status = document.getElementById("game-status");
-  status.innerHTML = "";
+  const gameStatus = document.getElementById("game-status");
+  gameStatus.innerHTML = "";
 
   const simonNumbers = [];
   makeField(board, generateNumbers(simonNumbers));
@@ -73,6 +81,6 @@ generator.addEventListener("submit", function (event) {
 
   const simonAnswers = [];
   setTimeout(function () {
-    simonQuestion(board, simonNumbers, simonAnswers);
+    simonQuestion(board, simonNumbers, simonAnswers, gameStatus);
   }, countdown * 1050);
 });

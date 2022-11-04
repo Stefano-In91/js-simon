@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simon Says</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+
+  <body>
+    <!-- Header -->
+    <header>
+      <div class="container">
+        <!-- Logo + Titolo -->
+        <div class="flex">
+          <img src="img/logo.png" alt="logo" />
+          <h1>Simon Says</h1>
+        </div>
+        <!-- /Logo + Titolo -->
+        <!-- Generator Form -->
+        <div class="flex">
+          <form id="generator">
+            <button id="start" type="submit">Start</button>
+          </form>
+        </div>
+        <!-- /Generator Form -->
+      </div>
+    </header>
+    <!-- /Header -->
+    <!-- Main -->
+    <main>
+      <div>
+        <!-- Board delle celle -->
+        <div id="board"></div>
+        <!-- /Board delle celle -->
+        <h2 id="game-status" style="text-align: center">
+          Clicca start per generare i numeri!
+        </h2>
+      </div>
+    </main>
+    <!-- /Main -->
+    <!-- Footer -->
+    <footer>
+      <div class="container">
+        <p>Made with ❤️ by Boolean</p>
+      </div>
+    </footer>
+    <!-- /Footer -->
+    <script src="js/app.js"></script>
+  </body>
+</html>

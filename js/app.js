@@ -52,9 +52,9 @@ function simonQuestion(container, array, answerArray, status) {
 
   let correctAnswer = simonEpilogue(container, array, answerArray);
   if (correctAnswer > (array.length / 5) * 3) {
-    status.innerHTML = `Complimenti, hai risposto correttamente a ${correctAnswer} su ${array.length}!`;
+    status.innerHTML = `Complimenti, hai risposto correttamente a ${correctAnswer} domande su ${array.length}!`;
   } else {
-    status.innerHTML = `Fai pena, hai azzeccato giusto ${correctAnswer} su ${array.length}, riprova`;
+    status.innerHTML = `Fai pena, hai azzeccato giusto ${correctAnswer} risposte su ${array.length}, riprova`;
   }
 }
 

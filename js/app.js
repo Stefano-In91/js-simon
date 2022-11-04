@@ -1,8 +1,13 @@
 "use strict";
 
+/*-----------
+  FUNCTIONS
+-----------*/
+
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min) + min);
 }
+// Riempie array con 5 numeri casuali
 function generateNumbers(array) {
   let number;
   while (array.length < 5) {
@@ -13,9 +18,11 @@ function generateNumbers(array) {
   }
   return array;
 }
+// Resetta campo
 function eraseField(container) {
   container.innerHTML = "";
 }
+// Crea campo con numeri da array (svuota preventivamente)
 function makeField(container, array) {
   eraseField(container);
   for (let i = 0; i < array.length; i++) {
@@ -24,6 +31,8 @@ function makeField(container, array) {
     container.append(cellNumber);
   }
 }
+// Controlla che i numeri inseriti siano presenti in quelli dell'array e restituisce numero
+// delle risposte esatte, colora celle a seconda della risposta
 function simonEpilogue(container, array, answerArray) {
   let counter = 0;
   for (let i = 0; i < array.length; i++) {
@@ -42,6 +51,8 @@ function simonEpilogue(container, array, answerArray) {
   }
   return counter;
 }
+// Domanda numeri, chiama funzione per sapere quante risposte esatte sono state date
+// Stampa in HTML il risultato
 function simonQuestion(container, array, answerArray, status) {
   for (let i = 0; i < array.length; i++) {
     let answer = Number(
@@ -54,9 +65,13 @@ function simonQuestion(container, array, answerArray, status) {
   if (correctAnswer > (array.length / 5) * 3) {
     status.innerHTML = `Complimenti, hai risposto correttamente a ${correctAnswer} domande su ${array.length}!`;
   } else {
-    status.innerHTML = `Fai pena, hai azzeccato giusto ${correctAnswer} risposte su ${array.length}, riprova`;
+    status.innerHTML = `Male, hai azzeccato giusto ${correctAnswer} risposte su ${array.length}, riprova`;
   }
 }
+
+/*-------
+  MAIN
+-------*/
 
 // Form submit -> start
 const start = document.getElementById("generator");
@@ -79,8 +94,8 @@ generator.addEventListener("submit", function (event) {
     eraseField(board);
   }, countdown * 1000);
 
-  const simonAnswers = [];
+  const userAnswers = [];
   setTimeout(function () {
-    simonQuestion(board, simonNumbers, simonAnswers, gameStatus);
+    simonQuestion(board, simonNumbers, userAnswers, gameStatus);
   }, countdown * 1050);
 });

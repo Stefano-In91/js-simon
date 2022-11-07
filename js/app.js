@@ -7,7 +7,7 @@
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min) + min);
 }
-// Riempie array con 5 numeri casuali
+// Riempie array con tot numeri casuali
 function generateNumbers(array, wantedLength) {
   let number;
   while (array.length < wantedLength) {
@@ -16,6 +16,7 @@ function generateNumbers(array, wantedLength) {
       array.push(number);
     }
   }
+
   return array;
 }
 // Resetta campo
@@ -33,13 +34,14 @@ function makeField(container, array) {
   array.forEach((element) => {
     const cellNumber = document.createElement("div");
     cellNumber.innerHTML = element;
+
     container.append(cellNumber);
   });
 }
 // Controlla che i numeri inseriti siano presenti in quelli dell'array e restituisce numero
 // delle risposte esatte, colora celle a seconda della risposta
-function simonEpilogue(container, array, answerArray) {
-  let counter = 0;
+function simonResults(container, array, answerArray) {
+  let score = 0;
   // for (let i = 0; i < array.length; i++) {
   //   const cellNumber = document.createElement("div");
   //   cellNumber.innerHTML = array[i];
@@ -47,7 +49,7 @@ function simonEpilogue(container, array, answerArray) {
   //   if (answerArray.includes(array[i])) {
   //     cellNumber.style.color = `darkgreen`;
   //     cellNumber.style.borderColor = `darkgreen`;
-  //     counter++;
+  //     score++;
   //   } else {
   //     cellNumber.style.color = `darkred`;
   //     cellNumber.style.borderColor = `darkred`;
@@ -61,14 +63,16 @@ function simonEpilogue(container, array, answerArray) {
     if (answerArray.includes(element)) {
       cellNumber.style.color = `darkgreen`;
       cellNumber.style.borderColor = `darkgreen`;
-      counter++;
+      score++;
     } else {
       cellNumber.style.color = `darkred`;
       cellNumber.style.borderColor = `darkred`;
     }
+
     container.append(cellNumber);
   });
-  return counter;
+
+  return score;
 }
 // Domanda numeri, chiama funzione per sapere quante risposte esatte sono state date
 // Stampa in HTML il risultato
@@ -80,20 +84,12 @@ function simonQuestion(container, array, status) {
     );
     answerArray.push(answer);
   }
-  // array.forEach((element) => {
-  //   let answer = Number(
-  //     prompt(
-  //       `Inserisci il ${array.indexOf(element)}° dei ${array.length} numeri`
-  //     )
-  //   );
-  //   answerArray.push(answer);
-  // });
 
-  let correctAnswer = simonEpilogue(container, array, answerArray);
-  if (correctAnswer > (array.length / 5) * 3) {
-    status.innerHTML = `Complimenti, hai risposto correttamente a ${correctAnswer} domande su ${array.length}!`;
+  const correctAnswers = simonResults(container, array, answerArray);
+  if (correctAnswers > (array.length / 5) * 3) {
+    status.innerHTML = `Complimenti, hai risposto correttamente a ${correctAnswers} domande su ${array.length}!`;
   } else {
-    status.innerHTML = `Male, hai azzeccato giusto ${correctAnswer} risposte su ${array.length}, riprova`;
+    status.innerHTML = `Male, hai azzeccato giusto ${correctAnswers} risposte su ${array.length}, riprova`;
   }
 }
 
@@ -109,15 +105,16 @@ generator.addEventListener("submit", function (event) {
 
   // Board
   const board = document.getElementById("board");
-  // Game Status
-  const gameStatus = document.getElementById("game-status");
-  gameStatus.innerHTML = "";
 
   const simonNumbers = [];
-  let wantedNumbers = 5;
+  const wantedNumbers = 5;
   makeField(board, generateNumbers(simonNumbers, wantedNumbers));
   const countdown = 5;
   alert(`hai ${countdown} secondi per memorizzare i numeri`);
+
+  // Game Status
+  const gameStatus = document.getElementById("game-status");
+  gameStatus.innerHTML = ``;
 
   setTimeout(function () {
     eraseField(board);
